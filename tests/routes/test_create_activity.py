@@ -3,12 +3,19 @@ from typing import List, Tuple
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from api.auth import crud
+from api.auth.auth_api import get_current_user
+from api.auth.crud import get_user_by_username
 from api.main import app
+from api.models.task import User
 
 
 class TestCreateActivity:
 
-    async def get_token(self, async_client):
+    async def get_token(self, db: AsyncSession, async_client) -> Tuple[User, str]:
+        """
+        Create a user and get a token
+        """
         await async_client.post(
             "/users",
             json={
@@ -24,13 +31,16 @@ class TestCreateActivity:
                 "password": "fugafuga",
             },
         )
-        return response.json().get("access_token")
+        return (
+            await crud.get_user_by_username(db, username="hogehoge"),
+            response.json().get("access_token"),
+        )
 
     @pytest.mark.asyncio
     async def test_create(self, db: AsyncSession, async_client):
-        token = await self.get_token(async_client)
+        user, token = await self.get_token(db, async_client)
+
         response = await async_client.post(
-            "/users/1/activities",
+            f"/users/{user.id}/activities",
             headers={"Authorization": f"Bearer {token}"}
         )
-        print(response.json())
