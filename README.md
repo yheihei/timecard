@@ -1,7 +1,7 @@
 # Getting Started
 
 ```
-docker compose --build
+docker compose build
 docker compose up -d
 docker compose exec app poetry run python -m api.migrate_db
 ```
