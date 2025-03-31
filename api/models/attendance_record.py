@@ -16,7 +16,7 @@ class AttendanceType(enum.Enum):
 
 class AttendanceRecord(Base, TimestampMixin):
     __tablename__ = "attendance_record"
-    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    id: Mapped[int] = mapped_column(primary_key=True, index=True, autoincrement=True)
     type: Mapped[AttendanceType] = mapped_column(Enum(AttendanceType), nullable=False)
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
     timestamp: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=now, nullable=False)

@@ -21,6 +21,7 @@ greenlet = "^2.0.2"
 python-jose = "^3.4.0"
 passlib = "^1.7.4"
 python-multipart = "^0.0.20"
+pytest-freezegun = "^0.4.2"
 
 
 [tool.poetry.group.dev.dependencies]
