@@ -7,6 +7,8 @@ services:
       - .:/src
     ports:
       - 8000:8000  # ホストマシンのポート8000を、docker内のポート8000に接続する
+    depends_on:
+      - db
   db:
     image: mysql:8.0
     platform: linux/x86_64  # M1 Macの場合必要

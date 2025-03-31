@@ -1,8 +1,8 @@
 from typing import AsyncGenerator, List, Tuple
 
-from httpx import AsyncClient
 import pytest
 from fastapi import Depends
+from httpx import AsyncClient
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
