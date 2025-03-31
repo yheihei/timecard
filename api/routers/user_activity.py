@@ -7,7 +7,7 @@ from api.auth.auth_api import get_current_user, oauth2_scheme
 from api.db import get_db
 from api.ddd.application_service import DoneCreateApplicationService
 from api.ddd.repository import DoneRepository
-from api.models.task import User
+from api.models import User
 
 router = APIRouter()
 

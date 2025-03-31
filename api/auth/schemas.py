@@ -12,7 +12,7 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
-    is_active: bool
+    active: bool
     hashed_password: str
 
     class Config:

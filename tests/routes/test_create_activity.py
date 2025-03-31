@@ -7,7 +7,7 @@ from api.auth import crud
 from api.auth.auth_api import get_current_user
 from api.auth.crud import get_user_by_username
 from api.main import app
-from api.models.task import User
+from api.models import User
 
 
 class TestCreateActivity:

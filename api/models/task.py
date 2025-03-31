@@ -19,13 +19,3 @@ class Done(Base):
     id = Column(Integer, ForeignKey("task.id"), primary_key=True)
 
     task = relationship("Task", back_populates="done")
-
-
-class User(Base):
-    __tablename__ = "user"
-
-    id = Column(Integer, primary_key=True, index=True)
-    username = Column(String(255), unique=True, index=True)
-    email = Column(String(255), unique=True, index=True)
-    hashed_password = Column(String(255))
-    is_active = Column(Boolean, default=True)

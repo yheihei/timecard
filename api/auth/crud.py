@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.auth import schemas
 from api.auth.security import get_password_hash
-from api.models.task import User
+from api.models import User
 
 
 async def get_user(db: AsyncSession, user_id: str):

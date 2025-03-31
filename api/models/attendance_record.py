@@ -2,7 +2,7 @@ import enum
 
 from sqlalchemy import (Boolean, Column, DateTime, Enum, ForeignKey, Integer,
                         String)
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from api.db import Base
 from api.models.base import TimestampMixin
@@ -16,7 +16,7 @@ class AttendanceType(enum.Enum):
 
 class AttendanceRecord(Base, TimestampMixin):
     __tablename__ = "attendance_record"
-    id = Column(Integer, primary_key=True)
-    type = Column(Enum(AttendanceType), nullable=False)
-    user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
-    timestamp = Column(DateTime(timezone=True), default=now, nullable=False)
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    type: Mapped[AttendanceType] = mapped_column(Enum(AttendanceType), nullable=False)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
+    timestamp: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=now, nullable=False)
