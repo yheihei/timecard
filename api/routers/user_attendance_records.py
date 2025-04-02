@@ -1,12 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-import api.cruds.done as done_crud
-import api.schemas.done as done_schema
-from api.auth.auth_api import get_current_user, oauth2_scheme
+from api.auth.auth_api import get_current_user
 from api.db import get_db
-from api.ddd.application_service import DoneCreateApplicationService
-from api.ddd.repository import DoneRepository
 from api.models import User
 from api.models.attendance_record import AttendanceRecord
 from api.schemas.user_attendance_records import CreateUserAttendanceRecord

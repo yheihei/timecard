@@ -1,8 +1,7 @@
 import enum
 
-from sqlalchemy import (Boolean, Column, DateTime, Enum, ForeignKey, Integer,
-                        String)
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import DateTime, Enum, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column
 
 from api.db import Base
 from api.models.base import TimestampMixin

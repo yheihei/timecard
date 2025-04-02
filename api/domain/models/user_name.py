@@ -1,4 +1,3 @@
-from api.domain.models.i_equatable import IEquatable
 
 
 class UserName:

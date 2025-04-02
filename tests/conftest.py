@@ -4,7 +4,6 @@ import pytest_asyncio
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import (AsyncSession, async_sessionmaker,
                                     create_async_engine)
-from sqlalchemy.orm import close_all_sessions
 
 from api.db import Base, get_db
 from api.main import app

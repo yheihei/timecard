@@ -1,14 +1,38 @@
 # Getting Started
 
+## Start Container
+
 ```
 docker compose build
 docker compose up -d
-docker compose run --entrypoint="" app poetry run python -m api.migrate_db
+```
+
+# Migration
+
+```
+docker compose run app bash
+# python -m api.migrate_db
+
+or
+
+docker compose run app poetry poe migrate
 ```
 
 # How to test
 
 ```
-# TODO: entrypoint上書きしないようにする
-docker compose run --entrypoint="" app poetry run pytest -s -p no:warnings -v
+docker compose run app bash
+# pytest -s -p no:warnings -v
+
+or
+
+docker compose run app poetry poe test
+```
+
+# Formatter and check tool
+
+```
+docker compose run app poetry poe autoflake
+docker compose run app poetry poe isort
+docker compose run app poetry poe mypy
 ```

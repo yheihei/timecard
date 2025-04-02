@@ -1,20 +1,12 @@
-from typing import AsyncGenerator, List, Tuple
+from typing import AsyncGenerator, Tuple
 
 import pytest
-from fastapi import Depends
 from httpx import AsyncClient
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import joinedload
 
-from api.auth import crud
-from api.auth.auth_api import get_current_user
-from api.auth.crud import get_user_by_username
-from api.db import get_db
-from api.main import app
 from api.models import User
 from api.models.attendance_record import AttendanceRecord, AttendanceType
-from api.utils.custom_datetime import now
 
 
 class TestCreateActivity:

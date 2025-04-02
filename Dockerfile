@@ -9,4 +9,4 @@ COPY pyproject.toml* poetry.lock* ./
 
 RUN pip install --upgrade pip setuptools && pip install poetry==1.8.5 && poetry config virtualenvs.create false && poetry lock --no-update && poetry install
 
-ENTRYPOINT ["poetry", "run", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--reload"]
+CMD ["poetry", "run", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--reload"]

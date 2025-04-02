@@ -9,6 +9,7 @@ services:
       - 8000:8000  # ホストマシンのポート8000を、docker内のポート8000に接続する
     depends_on:
       - db
+    command: ["poetry", "run", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--reload"]
   db:
     image: mysql:8.0
     platform: linux/x86_64  # M1 Macの場合必要
