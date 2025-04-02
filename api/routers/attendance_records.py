@@ -6,7 +6,7 @@ from api.auth.auth_api import get_current_user
 from api.db import get_db
 from api.models import User
 from api.models.attendance_record import AttendanceRecord
-from api.schemas.user_attendance_records import CreateUserAttendanceRecord
+from api.schemas.attendance_records import CreateUserAttendanceRecord
 from api.utils.custom_datetime import now
 
 router = APIRouter()
