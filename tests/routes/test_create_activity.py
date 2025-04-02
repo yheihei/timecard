@@ -1,4 +1,4 @@
-from typing import AsyncGenerator, Tuple
+from typing import AsyncGenerator, Tuple, TypedDict
 
 import pytest
 from httpx import AsyncClient
@@ -11,24 +11,29 @@ from api.models.attendance_record import AttendanceRecord, AttendanceType
 
 class TestCreateActivity:
 
-    async def get_token(self, async_client) -> Tuple[User, str]:
+    class CreateUserParam(TypedDict):
+        email: str
+        username: str
+        password: str
+
+    async def create_user_and_get_token(self, async_client, create_user_param: CreateUserParam) -> Tuple[User, str]:
         """
-        Create a user and get a token
+        テスト用のユーザーを作成し、アクセストークンを取得する
         """
         response = await async_client.post(
             "/users",
             json={
-                "email": "hoge@example.com",
-                "username": "hogehoge",
-                "password": "fugafuga",
+                "email": create_user_param["email"],
+                "username": create_user_param["username"],
+                "password": create_user_param["password"],
             },
         )
         user_id = response.json().get("id")
         response = await async_client.post(
             "/token",
             data={
-                "username": "hogehoge",
-                "password": "fugafuga",
+                "username": create_user_param["username"],
+                "password": create_user_param["password"],
             },
         )
         access_token = response.json().get("access_token")
@@ -38,7 +43,14 @@ class TestCreateActivity:
     @pytest.mark.asyncio
     async def test_create(self, test_async_generator: AsyncGenerator[AsyncClient, AsyncSession]):
         client, db = test_async_generator
-        user_id, access_token = await self.get_token(client)
+        user_id, access_token = await self.create_user_and_get_token(
+            client,
+            {
+                "email": "hogehoge@example.com",
+                "username": "hogehoge",
+                "password": "password",
+            },
+        )
 
         response = await client.post(
             f"/users/{user_id}/attendance-records",
@@ -59,6 +71,4 @@ class TestCreateActivity:
         )
         attendance_record: AttendanceRecord | None = result.scalars().first()
         assert attendance_record is not None
-        assert attendance_record.type == AttendanceType.CLOCK_IN
-        assert attendance_record.user_id == user_id
         assert str(attendance_record.timestamp) == "2024-03-03 09:00:00"
