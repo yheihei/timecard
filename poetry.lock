@@ -65,6 +65,23 @@ test = ["anyio[trio]", "coverage[toml] (>=4.5)", "hypothesis (>=4.0)", "mock (>=
 trio = ["trio (<0.22)"]
 
 [[package]]
+name = "async-factory-boy"
+version = "1.0.1"
+description = "factory_boy extension with asynchronous ORM support"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "async_factory_boy-1.0.1-py2.py3-none-any.whl", hash = "sha256:a0a652776ee164b60a45be06aca44a18781710447de1c534dda82d6cfe23f026"},
+    {file = "async_factory_boy-1.0.1.tar.gz", hash = "sha256:af3a42d9c26b86cc427faf5159ac2e8541b5564bf30424282eb866620af4e143"},
+]
+
+[package.dependencies]
+factory-boy = ">=3.0.0"
+
+[package.extras]
+dev = ["SQLAlchemy", "coverage", "flake8", "isort", "tortoise-orm (>=0.18.1)", "tox", "wheel (>=0.32.0)", "zest.releaser[recommended]"]
+
+[[package]]
 name = "autoflake"
 version = "2.2.1"
 description = "Removes unused imports and unused variables"
@@ -131,6 +148,38 @@ six = ">=1.9.0"
 [package.extras]
 gmpy = ["gmpy"]
 gmpy2 = ["gmpy2"]
+
+[[package]]
+name = "factory-boy"
+version = "3.3.3"
+description = "A versatile test fixtures replacement based on thoughtbot's factory_bot for Ruby."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "factory_boy-3.3.3-py2.py3-none-any.whl", hash = "sha256:1c39e3289f7e667c4285433f305f8d506efc2fe9c73aaea4151ebd5cdea394fc"},
+    {file = "factory_boy-3.3.3.tar.gz", hash = "sha256:866862d226128dfac7f2b4160287e899daf54f2612778327dd03d0e2cb1e3d03"},
+]
+
+[package.dependencies]
+Faker = ">=0.7.0"
+
+[package.extras]
+dev = ["Django", "Pillow", "SQLAlchemy", "coverage", "flake8", "isort", "mongoengine", "mongomock", "mypy", "tox", "wheel (>=0.32.0)", "zest.releaser[recommended]"]
+doc = ["Sphinx", "sphinx-rtd-theme", "sphinxcontrib-spelling"]
+
+[[package]]
+name = "faker"
+version = "37.1.0"
+description = "Faker is a Python package that generates fake data for you."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "faker-37.1.0-py3-none-any.whl", hash = "sha256:dc2f730be71cb770e9c715b13374d80dbcee879675121ab51f9683d262ae9a1c"},
+    {file = "faker-37.1.0.tar.gz", hash = "sha256:ad9dc66a3b84888b837ca729e85299a96b58fdaef0323ed0baace93c9614af06"},
+]
+
+[package.dependencies]
+tzdata = "*"
 
 [[package]]
 name = "fastapi"
@@ -1042,6 +1091,17 @@ files = [
 ]
 
 [[package]]
+name = "tzdata"
+version = "2025.2"
+description = "Provider of IANA time zone data"
+optional = false
+python-versions = ">=2"
+files = [
+    {file = "tzdata-2025.2-py2.py3-none-any.whl", hash = "sha256:1a403fada01ff9221ca8044d701868fa132215d84beb92242d9acd2147f667a8"},
+    {file = "tzdata-2025.2.tar.gz", hash = "sha256:b60a638fcc0daffadf82fe0f57e53d06bdec2f36c4df66280ae79bce6bd6f2b9"},
+]
+
+[[package]]
 name = "uvicorn"
 version = "0.23.2"
 description = "The lightning-fast ASGI server."
@@ -1226,4 +1286,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "c705fec328e027e3719df99b46d0ad913935501df53587ca7693cef450dc66f7"
+content-hash = "acfd1c4433236785c32ec078e330050149ff2ab63f958dffb27b6ebd114c10ba"

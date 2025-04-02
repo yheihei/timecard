@@ -6,10 +6,12 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.models import User
-from api.models.attendance_record import AttendanceRecord
+from api.models.attendance_record import AttendanceRecord, AttendanceType
+
+from .test_create_attendance_records_data import AttendanceRecordFactory
 
 
-class TestCreateActivity:
+class TestCreateAttendanceRecords:
 
     class CreateTestUserParam(TypedDict):
         email: str
@@ -41,7 +43,7 @@ class TestCreateActivity:
 
     @pytest.mark.freeze_time("2024-03-03T09:00:00+09:00")
     @pytest.mark.asyncio
-    async def test_create(self, test_async_generator: AsyncGenerator[AsyncClient, AsyncSession]):
+    async def test_打刻操作をしたときの時刻で打刻が記録されること(self, test_async_generator: AsyncGenerator[AsyncClient, AsyncSession]):
         client, db = test_async_generator
         user_id, access_token = await self.create_user_and_get_token(
             client,
@@ -56,7 +58,7 @@ class TestCreateActivity:
             f"/attendance-records",
             headers={"Authorization": f"Bearer {access_token}"},
             json={
-                "type": "CLOCK_IN",
+                "type": "clock_in",
             },
         )
 
@@ -66,7 +68,7 @@ class TestCreateActivity:
         result = await db.execute(
             select(AttendanceRecord).filter(
                 AttendanceRecord.user_id == user_id,
-                AttendanceRecord.type == "CLOCK_IN",
+                AttendanceRecord.type == "clock_in",
             )
         )
         attendance_record: AttendanceRecord | None = result.scalars().first()
@@ -74,17 +76,49 @@ class TestCreateActivity:
         assert str(attendance_record.timestamp) == "2024-03-03 09:00:00"
 
     @pytest.mark.asyncio
-    async def test_create_unauthorized(self, test_async_generator: AsyncGenerator[AsyncClient, AsyncSession]):
+    async def test_未認証だと打刻できないこと(self, test_async_generator: AsyncGenerator[AsyncClient, AsyncSession]):
         client, db = test_async_generator
 
-        # 認証なしでリクエスト送信したとき401エラーが返ることを確認
         response = await client.post(
             f"/attendance-records",
             headers={"Authorization": f"Bearer fuga"},
             json={
-                "type": "CLOCK_IN",
+                "type": "clock_in",
             },
         )
 
         assert response.status_code == 401
-    
+
+    @pytest.mark.freeze_time("2024-03-03T09:00:00+09:00")
+    @pytest.mark.asyncio
+    async def test_出勤打刻が当日内で連続したらエラーとなること(self, test_async_generator: AsyncGenerator[AsyncClient, AsyncSession]):
+        client, db = test_async_generator
+        user_id, access_token = await self.create_user_and_get_token(
+            client,
+            {
+                "email": "hogehoge@example.com",
+                "username": "hogehoge",
+                "password": "password",
+            },
+        )
+
+        # 当日内に出勤打刻を作る
+        AttendanceRecordFactory._meta.sqlalchemy_session = db
+        await AttendanceRecordFactory.create(
+            user_id=user_id,
+            type=AttendanceType.CLOCK_IN,
+            timestamp="2024-03-03T06:00:00+09:00",
+            created_at="2024-03-03T06:00:00+09:00",
+            updated_at="2024-03-03T06:00:00+09:00",
+        )
+
+        response = await client.post(
+            f"/attendance-records",
+            headers={"Authorization": f"Bearer {access_token}"},
+            json={
+                "type": AttendanceType.CLOCK_IN.value,
+            },
+        )
+
+        assert response.status_code == 400
+        assert response.json() == {"detail": "2連続でclock_inはできません"}
