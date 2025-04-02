@@ -10,10 +10,10 @@ from api.utils.custom_datetime import now
 
 router = APIRouter()
 
-@router.post("/users/{user_id}/attendance-records", response_model=None)
-async def create_user_attendance_records(body: CreateUserAttendanceRecord, user_id: int, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
+@router.post("/attendance-records", response_model=None)
+async def create_user_attendance_records(body: CreateUserAttendanceRecord, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     record = AttendanceRecord(
-        user_id=user_id,
+        user_id=user.id,
         type=body.type,
         timestamp=now(),
     )

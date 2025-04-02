@@ -32,3 +32,4 @@ async def test_async_generator() -> AsyncGenerator[AsyncClient, AsyncSession]:
         yield client, session  # クライアントとセッションの両方を返す
         
     await session.close()
+    await async_engine.dispose()

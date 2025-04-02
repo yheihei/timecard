@@ -6,17 +6,17 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.models import User
-from api.models.attendance_record import AttendanceRecord, AttendanceType
+from api.models.attendance_record import AttendanceRecord
 
 
 class TestCreateActivity:
 
-    class CreateUserParam(TypedDict):
+    class CreateTestUserParam(TypedDict):
         email: str
         username: str
         password: str
 
-    async def create_user_and_get_token(self, async_client, create_user_param: CreateUserParam) -> Tuple[User, str]:
+    async def create_user_and_get_token(self, async_client, create_user_param: CreateTestUserParam) -> Tuple[User, str]:
         """
         テスト用のユーザーを作成し、アクセストークンを取得する
         """
@@ -53,7 +53,7 @@ class TestCreateActivity:
         )
 
         response = await client.post(
-            f"/users/{user_id}/attendance-records",
+            f"/attendance-records",
             headers={"Authorization": f"Bearer {access_token}"},
             json={
                 "type": "CLOCK_IN",
@@ -72,3 +72,19 @@ class TestCreateActivity:
         attendance_record: AttendanceRecord | None = result.scalars().first()
         assert attendance_record is not None
         assert str(attendance_record.timestamp) == "2024-03-03 09:00:00"
+
+    @pytest.mark.asyncio
+    async def test_create_unauthorized(self, test_async_generator: AsyncGenerator[AsyncClient, AsyncSession]):
+        client, db = test_async_generator
+
+        # 認証なしでリクエスト送信したとき401エラーが返ることを確認
+        response = await client.post(
+            f"/attendance-records",
+            headers={"Authorization": f"Bearer fuga"},
+            json={
+                "type": "CLOCK_IN",
+            },
+        )
+
+        assert response.status_code == 401
+    
