@@ -37,7 +37,7 @@ class ClockInRepository(IClockInRepository):
             attendance_time=AttendanceTime(last_record.timestamp),
             type=last_record.type,
         )
-    
+
     async def save(self, clock_in_record: ClockInRecord) -> None:
         """
         打刻を保存する

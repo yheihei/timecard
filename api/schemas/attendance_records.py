@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 
-from api.models.attendance_record import AttendanceType
+from api.domain.models.attendance_record.i_attendance_record import \
+    AttendanceType
 
 
 class CreateUserAttendanceRecord(BaseModel):

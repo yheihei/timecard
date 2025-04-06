@@ -4,13 +4,10 @@ from sqlalchemy import DateTime, Enum, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
 from api.db import Base
+from api.domain.models.attendance_record.i_attendance_record import \
+    AttendanceType
 from api.models.base import TimestampMixin
 from api.utils.custom_datetime import now
-
-
-class AttendanceType(enum.Enum):
-    CLOCK_IN = "CLOCK_IN"
-    CLOCK_OUT = "CLOCK_OUT"
 
 
 class AttendanceRecord(Base, TimestampMixin):
