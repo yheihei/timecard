@@ -112,4 +112,4 @@ class TestCreateAttendanceRecords:
         )
 
         assert response.status_code == 400
-        assert response.json() == {"detail": "2連続で出勤打刻はできません"}
+        assert response.json() == {"detail": "出勤している状態で出勤打刻はできません"}

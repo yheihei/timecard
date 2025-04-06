@@ -17,7 +17,7 @@ from api.utils.custom_datetime import now
 router = APIRouter()
 
 @router.post("/clock_in", response_model=None)
-async def create_user_attendance_records(db: AsyncSession = Depends(get_db), user: UserModel = Depends(get_current_user)):
+async def create_clock_in(db: AsyncSession = Depends(get_db), user: UserModel = Depends(get_current_user)):
     try:
         await CreateClockInAppService(
             ClockInService(ClockInRepository(db))
@@ -32,6 +32,6 @@ async def create_user_attendance_records(db: AsyncSession = Depends(get_db), use
     except AlreadyClockedInError:
         raise HTTPException(
             status_code=400,
-            detail=f"2連続で出勤打刻はできません",
+            detail=f"出勤している状態で出勤打刻はできません",
         )
     return None
