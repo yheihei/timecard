@@ -7,7 +7,7 @@ docker compose build
 docker compose up -d
 ```
 
-# Migration
+## Migration
 
 ```
 docker compose run app bash
@@ -17,6 +17,10 @@ or
 
 docker compose run app poetry poe migrate
 ```
+
+# API Doc
+
+after `docker compose up`, see http://localhost:8000/docs
 
 # How to test
 
