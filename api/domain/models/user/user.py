@@ -1,10 +1,10 @@
-from api.domain.models.i_equatable import IEquatable
-from api.domain.models.user_name import UserName
+from api.domain.models.user.i_equatable import IEquatable
+from api.domain.models.user.user_name import UserName
 
 
 class User(IEquatable["User"]):
 
-    def __init__(self, id: int, user_name: str, display_name: str, age: int) -> None:
+    def __init__(self, id: int, user_name: str, display_name: str) -> None:
         self.__id = id
         self.__user_name: UserName = UserName(user_name)
         self.__display_name: str = display_name

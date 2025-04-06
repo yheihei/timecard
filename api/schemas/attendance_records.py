@@ -4,4 +4,4 @@ from api.models.attendance_record import AttendanceType
 
 
 class CreateUserAttendanceRecord(BaseModel):
-    type: AttendanceType = Field(None, example="clock_in")
+    type: AttendanceType = Field(None, example="CLOCK_IN")

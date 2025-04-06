@@ -9,8 +9,8 @@ from api.utils.custom_datetime import now
 
 
 class AttendanceType(enum.Enum):
-    CLOCK_IN = "clock_in"
-    CLOCK_OUT = "clock_out"
+    CLOCK_IN = "CLOCK_IN"
+    CLOCK_OUT = "CLOCK_OUT"
 
 
 class AttendanceRecord(Base, TimestampMixin):

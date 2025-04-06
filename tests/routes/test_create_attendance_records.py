@@ -58,7 +58,7 @@ class TestCreateAttendanceRecords:
             f"/attendance-records",
             headers={"Authorization": f"Bearer {access_token}"},
             json={
-                "type": "clock_in",
+                "type": "CLOCK_IN",
             },
         )
 
@@ -68,7 +68,7 @@ class TestCreateAttendanceRecords:
         result = await db.execute(
             select(AttendanceRecord).filter(
                 AttendanceRecord.user_id == user_id,
-                AttendanceRecord.type == "clock_in",
+                AttendanceRecord.type == "CLOCK_IN",
             )
         )
         attendance_record: AttendanceRecord | None = result.scalars().first()
@@ -83,7 +83,7 @@ class TestCreateAttendanceRecords:
             f"/attendance-records",
             headers={"Authorization": f"Bearer fuga"},
             json={
-                "type": "clock_in",
+                "type": "CLOCK_IN",
             },
         )
 
@@ -121,4 +121,4 @@ class TestCreateAttendanceRecords:
         )
 
         assert response.status_code == 400
-        assert response.json() == {"detail": "2連続でclock_inはできません"}
+        assert response.json() == {"detail": "2連続でCLOCK_INはできません"}
