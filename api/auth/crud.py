@@ -18,7 +18,7 @@ async def get_user_by_email(db: AsyncSession, email: str):
     )
     return result.scalars().first()
 
-async def get_user_by_username(db: AsyncSession, username: str):
+async def get_user_by_username(db: AsyncSession, username: str | None):
     result = await db.execute(
         select(User).filter(User.username == username)
     )

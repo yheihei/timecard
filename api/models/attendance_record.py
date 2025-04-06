@@ -1,4 +1,5 @@
-import enum
+
+from datetime import datetime
 
 from sqlalchemy import DateTime, Enum, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
@@ -16,3 +17,7 @@ class AttendanceRecord(Base, TimestampMixin):
     type: Mapped[AttendanceType] = mapped_column(Enum(AttendanceType), nullable=False)
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
     timestamp: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=now, nullable=False)
+
+    @property
+    def timestamp_for_datetime(self) -> datetime:
+        return datetime.fromisoformat(str(self.timestamp))

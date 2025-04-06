@@ -2,8 +2,6 @@ import abc
 
 from api.domain.models.clock_in.clock_in_record import ClockInRecord
 from api.domain.models.user.user import User
-from api.infrastructure.sqlalchemy.clock_in.i_clock_in_repository import \
-    IClockInRepository
 
 
 class IClockInService(abc.ABC):

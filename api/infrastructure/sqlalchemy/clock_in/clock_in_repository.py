@@ -34,7 +34,7 @@ class ClockInRepository(IClockInRepository):
             return None
         return AttendanceRecord(
             user=user,
-            attendance_time=AttendanceTime(last_record.timestamp),
+            attendance_time=AttendanceTime(last_record.timestamp_for_datetime),
             type=last_record.type,
         )
 
