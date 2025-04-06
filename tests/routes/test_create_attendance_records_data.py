@@ -1,5 +1,4 @@
 from async_factory_boy.factory.sqlalchemy import AsyncSQLAlchemyFactory
-from factory import Faker
 
 from api.models.attendance_record import AttendanceRecord, AttendanceType
 

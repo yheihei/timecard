@@ -8,15 +8,13 @@ from api.infrastructure.sqlalchemy.clock_in.i_clock_in_repository import \
 
 class IClockInService(abc.ABC):
     @abc.abstractmethod
-    def __init__(self, clock_in_repository) -> IClockInRepository:
+    def __init__(self, clock_in_repository):
         pass
 
     @abc.abstractmethod
-    def clock_in(self, clock_in_record: ClockInRecord) -> None:
+    async def clock_in(self, clock_in_record: ClockInRecord) -> ClockInRecord:
         """Clock in the user."""
-        pass
 
     @abc.abstractmethod
-    def is_already_clocked_in(self, user: User) -> bool:
+    async def is_already_clocked_in(self, user: User) -> bool:
         """Check if the user is already clocked in."""
-        pass

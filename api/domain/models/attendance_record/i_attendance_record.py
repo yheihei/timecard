@@ -1,6 +1,7 @@
 import abc
 import enum
 
+from api.domain.models.attendance_record.attendance_time import AttendanceTime
 from api.domain.models.user.user import User
 
 
@@ -18,7 +19,7 @@ class IAttendanceRecord(abc.ABC):
 
     @property
     @abc.abstractmethod
-    def timestamp(self) -> str:
+    def attendance_time(self) -> AttendanceTime:
         pass
 
     @property
