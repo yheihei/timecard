@@ -55,7 +55,7 @@ class TestCreateAttendanceRecords:
         )
 
         response = await client.post(
-            f"/attendance-records",
+            f"/clock_in",
             headers={"Authorization": f"Bearer {access_token}"},
             json={
                 "type": "CLOCK_IN",
@@ -80,7 +80,7 @@ class TestCreateAttendanceRecords:
         client, db = test_async_generator
 
         response = await client.post(
-            f"/attendance-records",
+            f"/clock_in",
             headers={"Authorization": f"Bearer fuga"},
             json={
                 "type": "CLOCK_IN",
@@ -113,7 +113,7 @@ class TestCreateAttendanceRecords:
         )
 
         response = await client.post(
-            f"/attendance-records",
+            f"/clock_in",
             headers={"Authorization": f"Bearer {access_token}"},
             json={
                 "type": AttendanceType.CLOCK_IN.value,

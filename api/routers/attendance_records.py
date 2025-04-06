@@ -17,7 +17,7 @@ from api.utils.custom_datetime import now
 
 router = APIRouter()
 
-@router.post("/attendance-records", response_model=None)
+@router.post("/clock_in", response_model=None)
 async def create_user_attendance_records(body: CreateUserAttendanceRecord, db: AsyncSession = Depends(get_db), user: UserModel = Depends(get_current_user)):
     try:
         await CreateClockInAppService(
