@@ -12,13 +12,12 @@ from api.domain.services.clock_in.exceptions import AlreadyClockedInError
 from api.infrastructure.sqlalchemy.clock_in.clock_in_repository import \
     ClockInRepository
 from api.models import User as UserModel
-from api.schemas.attendance_records import CreateUserAttendanceRecord
 from api.utils.custom_datetime import now
 
 router = APIRouter()
 
 @router.post("/clock_in", response_model=None)
-async def create_user_attendance_records(body: CreateUserAttendanceRecord, db: AsyncSession = Depends(get_db), user: UserModel = Depends(get_current_user)):
+async def create_user_attendance_records(db: AsyncSession = Depends(get_db), user: UserModel = Depends(get_current_user)):
     try:
         await CreateClockInAppService(
             ClockInService(ClockInRepository(db))
@@ -33,6 +32,6 @@ async def create_user_attendance_records(body: CreateUserAttendanceRecord, db: A
     except AlreadyClockedInError:
         raise HTTPException(
             status_code=400,
-            detail=f"2連続で{body.type.value}はできません",
+            detail=f"2連続で出勤打刻はできません",
         )
     return None

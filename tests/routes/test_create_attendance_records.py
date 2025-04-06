@@ -57,9 +57,6 @@ class TestCreateAttendanceRecords:
         response = await client.post(
             f"/clock_in",
             headers={"Authorization": f"Bearer {access_token}"},
-            json={
-                "type": "CLOCK_IN",
-            },
         )
 
         assert response.status_code == 200
@@ -82,9 +79,6 @@ class TestCreateAttendanceRecords:
         response = await client.post(
             f"/clock_in",
             headers={"Authorization": f"Bearer fuga"},
-            json={
-                "type": "CLOCK_IN",
-            },
         )
 
         assert response.status_code == 401
@@ -115,10 +109,7 @@ class TestCreateAttendanceRecords:
         response = await client.post(
             f"/clock_in",
             headers={"Authorization": f"Bearer {access_token}"},
-            json={
-                "type": AttendanceType.CLOCK_IN.value,
-            },
         )
 
         assert response.status_code == 400
-        assert response.json() == {"detail": "2連続でCLOCK_INはできません"}
+        assert response.json() == {"detail": "2連続で出勤打刻はできません"}
